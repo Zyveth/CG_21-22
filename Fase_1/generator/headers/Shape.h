@@ -2,19 +2,19 @@
 #define SHAPE_H
 
 #include <vector>
-#include "../headers/Vertice.h"
+#include "Triangle.h"
 
 using namespace std;
 
 class Shape
 {
     protected:
-        vector<Vertice> vertices;
+        vector<Triangle> triangles;
 
     public:
-        Shape(vector<Vertice> points);
+        Shape(vector<Triangle> trianglesp);
 
-        void addVertice(Vertice toAdd);
+        void addTriangle(Triangle toAdd);
 };
 
 #endif // SHAPE_H

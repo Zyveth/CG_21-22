@@ -6,9 +6,9 @@
 class Sphere : protected Shape
 {
     public:
-        Sphere(vector<Vertice> points) : Shape(points){};
+        Sphere(vector<Triangle> trianglesp) : Shape(trianglesp){};
 
-        void generateVertices(float radius, int slices, int stacks);
+        Sphere generateTriangles(float radius, int slices, int stacks);
 };
 
 #endif // SPHERE_H

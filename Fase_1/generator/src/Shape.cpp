@@ -1,11 +1,11 @@
 #include "../headers/Shape.h"
 
-Shape::Shape(vector<Vertice> points)
+Shape::Shape(vector<Triangle> trianglesp)
 {
-    vertices = points;
+    triangles = trianglesp;
 }
 
-void Shape::addVertice(Vertice toAdd)
+void Shape::addTriangle(Triangle toAdd)
 {
-    vertices.push_back(toAdd);
+    triangles.push_back(toAdd);
 }

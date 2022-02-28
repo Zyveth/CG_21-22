@@ -9,6 +9,8 @@ class Vertice
         float z;
 
     public:
+        Vertice();
+
         Vertice(float xp, float yp, float zp);
 };
 

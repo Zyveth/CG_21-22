@@ -98,7 +98,7 @@ void renderScene(void) {
 }
 
 int main(int argc, char **argv) {
-b.generateTriangles(1.0, 2.0, 6, 4);
+b.generateTriangles(1.0, 2.0, 4, 4);
 // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);

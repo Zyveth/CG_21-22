@@ -12,9 +12,10 @@ class Shape
         vector<Triangle> triangles;
 
     public:
+        Shape();
         Shape(vector<Triangle> trianglesp);
-
         void addTriangle(Triangle toAdd);
+        vector<Triangle> getTriangles();
 };
 
 #endif // SHAPE_H

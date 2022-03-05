@@ -13,3 +13,18 @@ Vertice::Vertice(float xp, float yp, float zp)
     y = yp;
     z = zp;
 }
+
+float Vertice::getX()
+{
+    return x;
+}
+
+float Vertice::getY()
+{
+    return y;
+}
+
+float Vertice::getZ()
+{
+    return z;
+}

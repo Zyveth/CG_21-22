@@ -10,8 +10,10 @@ class Vertice
 
     public:
         Vertice();
-
         Vertice(float xp, float yp, float zp);
+        float getX();
+        float getY();
+        float getZ();
 };
 
 #endif // VERTICE_H

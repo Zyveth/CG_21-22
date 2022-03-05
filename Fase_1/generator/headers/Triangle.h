@@ -12,6 +12,9 @@ class Triangle
 
     public:
         Triangle(Vertice v, Vertice b, Vertice n);
+        Vertice getV1();
+        Vertice getV2();
+        Vertice getV3();
 };
 
 #endif

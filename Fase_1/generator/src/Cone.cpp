@@ -45,6 +45,12 @@ void Cone::generateTriangles(float radius, float height, int slices, int stacks)
             }
         }
 
+        if(stacks == 1)
+        {
+            Triangle top(first, second, tip);
+            this->addTriangle(top);
+        }
+
         this->addTriangle(t);
         }
 }

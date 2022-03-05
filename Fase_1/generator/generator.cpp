@@ -7,11 +7,11 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "headers/Box.h"
+#include "headers/Cone.h"
 
 using namespace std;
 
-Box b;
+Cone b;
 
 void changeSize(int w, int h) {
 
@@ -98,7 +98,7 @@ void renderScene(void) {
 }
 
 int main(int argc, char **argv) {
-b.generateTriangles(3.0, 4);
+b.generateTriangles(1.0, 2.0, 6, 4);
 // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);

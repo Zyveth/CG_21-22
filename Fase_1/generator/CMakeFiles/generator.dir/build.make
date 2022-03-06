@@ -98,6 +98,7 @@ generator: src/Vertice.cpp
 generator: src/Triangle.cpp
 generator: src/Box.cpp
 generator: src/Cone.cpp
+generator: src/Sphere.cpp
 generator: CMakeFiles/generator.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/zyveth/Desktop/Universidade/3º Ano/CG/CG_21-22/Fase_1/generator/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable generator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/generator.dir/link.txt --verbose=$(VERBOSE)

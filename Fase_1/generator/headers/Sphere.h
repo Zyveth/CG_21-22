@@ -3,12 +3,13 @@
 
 #include "Shape.h"
 
-class Sphere : protected Shape
+class Sphere : public Shape
 {
     public:
+        Sphere() : Shape(){};
         Sphere(vector<Triangle> trianglesp) : Shape(trianglesp){};
 
-        Sphere generateTriangles(float radius, int slices, int stacks);
+        void generateTriangles(float radius, int slices, int stacks);
 };
 
 #endif // SPHERE_H

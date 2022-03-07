@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 # Project Name
 PROJECT(generator)
 
+# set(OpenGL_GL_PREFERENCE LEGACY)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_executable(${PROJECT_NAME} generator.cpp)
@@ -44,8 +45,8 @@ else (WIN32) #Linux and Mac
 	link_directories(${GLUT_LIBRARY_DIRS})
 	add_definitions(${GLUT_DEFINITIONS})
 	
-	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${PROJECT_SOURCE_DIR}/src/Plane.cpp
-	${PROJECT_SOURCE_DIR}/src/Shape.cpp ${PROJECT_SOURCE_DIR}/src/Vertice.cpp ${PROJECT_SOURCE_DIR}/src/Triangle.cpp
+	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${PROJECT_SOURCE_DIR}/src/Vertice.cpp
+	${PROJECT_SOURCE_DIR}/src/Triangle.cpp ${PROJECT_SOURCE_DIR}/src/Shape.cpp ${PROJECT_SOURCE_DIR}/src/Plane.cpp
 	${PROJECT_SOURCE_DIR}/src/Box.cpp ${PROJECT_SOURCE_DIR}/src/Cone.cpp ${PROJECT_SOURCE_DIR}/src/Sphere.cpp)
 	if(NOT GLUT_FOUND)
 	   message(ERROR ": GLUT not found!")

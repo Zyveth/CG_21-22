@@ -11,10 +11,13 @@ class Triangle
         Vertice v3;
 
     public:
+        Triangle();
         Triangle(Vertice v, Vertice b, Vertice n);
         Vertice getV1();
         Vertice getV2();
         Vertice getV3();
+        void serialize(int fd);
+        void deserialize(int fd);
 };
 
 #endif

@@ -1,122 +1,218 @@
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "headers/Sphere.h"
+#include "headers/Box.h"
+#include "headers/Cone.h"
+#include "headers/Plane.h"
 
 using namespace std;
 
-Sphere b;
+int main(int argc, char **argv) 
+{
+	if(argc > 7 || argc < 5)
+	{
+		printf("Invalid number of arguments: %d.\n", argc);
+		exit(0);
+	}
 
-void changeSize(int w, int h) {
+	if(strcmp(argv[1], "sphere") == 0)
+	{
+		if(argc - 2 != 4)
+		{
+			printf("Invalid number of arguments for sphere: %d.\n", argc - 2);
+			exit(0);
+		}
 
-	// Prevent a divide by zero, when window is too short
-	// (you cant make a window with zero width).
-	if(h == 0)
-		h = 1;
+		float radius = strtof(argv[2], NULL);
+		int slices = strtol(argv[3], NULL, 10);
+		int stacks = strtol(argv[4], NULL, 10);
 
-	// compute window's aspect ratio 
-	float ratio = w * 1.0 / h;
+		if(radius < 0)
+		{
+			printf("Invalid argument for radius: %f.\n", radius);
+			exit(0);
+		}
 
-	// Set the projection matrix as current
-	glMatrixMode(GL_PROJECTION);
-	// Load Identity Matrix
-	glLoadIdentity();
-	
-	// Set the viewport to be the entire window
-    glViewport(0, 0, w, h);
+		if(slices < 0)
+		{
+			printf("Invalid argument for slices: %d.\n", slices);
+			exit(0);
+		}
 
-	// Set perspective
-	gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+		if(stacks < 0)
+		{
+			printf("Invalid argument for stacks: %d.\n", stacks);
+			exit(0);
+		}
 
-	// return to the model view matrix mode
-	glMatrixMode(GL_MODELVIEW);
-}
+		char* init_path = "generated/";
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[5]) + strlen(init_path)));
+		strcpy(path, init_path);
+		strncat(path, argv[5], strlen(argv[5]));
 
-void renderScene(void) {
+		Sphere s;
 
-	// clear buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		printf("Generating triangles...\n");
 
-	// set the camera
-	glLoadIdentity();
-	gluLookAt(5.0,5.0,5.0, 
-		      0.0,0.0,0.0,
-			  0.0f,1.0f,0.0f);
+		s.generateTriangles(radius, slices, stacks);
 
-	glBegin(GL_LINES);
-	// X axis in red
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(
-	-100.0f, 0.0f, 0.0f);
-	glVertex3f( 100.0f, 0.0f, 0.0f);
+		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
 
-	// Y Axis in Green
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0f,
-	-100.0f, 0.0f);
-	glVertex3f(0.0f, 100.0f, 0.0f);
+		s.serialize(path);
 
-	// Z Axis in Blue
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f,
-	-100.0f);
-	glVertex3f(0.0f, 0.0f, 100.0f);
-	glEnd();
+		printf("Triangles saved in \'%s\'.", path);
 
-	// put drawing instructions here
+		free(path);
+	}
 
-    glPolygonMode(GL_FRONT, GL_LINE);
+	if(strcmp(argv[1], "box") == 0)
+	{
+		if(argc - 2 != 3)
+		{
+			printf("Invalid number of arguments for box: %d.\n", argc - 2);
+			exit(0);
+		}
 
-	// Triangles
-	glBegin(GL_TRIANGLES);
+		float units = strtof(argv[2], NULL);
+		int divisions = strtol(argv[3], NULL, 10);
 
-	glColor3f(1.0, 1.0, 1.0);
+		if(units < 0)
+		{
+			printf("Invalid argument for units: %f.\n", units);
+			exit(0);
+		}
 
-    vector<Triangle> triangles = b.getTriangles();
-    for(vector<Triangle>::iterator it = triangles.begin(); it != triangles.end(); it++)
-    {
-        Triangle curr = *it;
-        Vertice v1 = curr.getV1();
-        Vertice v2 = curr.getV2();
-        Vertice v3 = curr.getV3();
+		if(divisions < 0)
+		{
+			printf("Invalid argument for divisions: %d.\n", divisions);
+			exit(0);
+		}
 
-        glVertex3f(v1.getX(), v1.getY(), v1.getZ());
-        glVertex3f(v2.getX(), v2.getY(), v2.getZ());
-        glVertex3f(v3.getX(), v3.getY(), v3.getZ());
-    }
+		char* init_path = "generated/";
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[4]) + strlen(init_path)));
+		strcpy(path, init_path);
+		strncat(path, argv[4], strlen(argv[4]));
 
-	glEnd();
+		Box b;
 
-	// End of frame
-	glutSwapBuffers();
-}
+		printf("Generating triangles...\n");
 
-int main(int argc, char **argv) {
-b.generateTriangles(1.0, 20, 20);
-// init GLUT and the window
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
-	glutInitWindowPosition(100,100);
-	glutInitWindowSize(800,800);
-	glutCreateWindow("CG@DI-UM");
-		
-// Required callback registry 
-	glutDisplayFunc(renderScene);
-	glutReshapeFunc(changeSize);
+		b.generateTriangles(units, divisions);
 
+		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
 
-//  OpenGL settings
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	
-// enter GLUT's main cycle
-	glutMainLoop();
+		b.serialize(path);
+
+		printf("Triangles saved in \'%s\'.", path);
+
+		free(path);
+	}
+
+	if(strcmp(argv[1], "cone") == 0)
+	{
+		if(argc - 2 != 5)
+		{
+			printf("Invalid number of arguments for cone: %d.\n", argc - 2);
+			exit(0);
+		}
+
+		float radius = strtof(argv[2], NULL);
+		float height = strtof(argv[3], NULL);
+		int slices = strtol(argv[4], NULL, 10);
+		int stacks = strtol(argv[5], NULL, 10);
+
+		if(radius < 0)
+		{
+			printf("Invalid argument for radius: %f.\n", radius);
+			exit(0);
+		}
+
+		if(height < 0)
+		{
+			printf("Invalid argument for height: %f.\n", height);
+			exit(0);
+		}
+
+		if(slices < 0)
+		{
+			printf("Invalid argument for slices: %d.\n", slices);
+			exit(0);
+		}
+
+		if(stacks < 0)
+		{
+			printf("Invalid argument for stacks: %d.\n", stacks);
+			exit(0);
+		}
+
+		char* init_path = "generated/";
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[5]) + strlen(init_path)));
+		strcpy(path, init_path);
+		strncat(path, argv[5], strlen(argv[5]));
+
+		Cone c;
+
+		printf("Generating triangles...\n");
+
+		c.generateTriangles(radius, height, slices, stacks);
+
+		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
+
+		c.serialize(path);
+
+		printf("Triangles saved in \'%s\'.", path);
+
+		free(path);
+	}
+
+	if(strcmp(argv[1], "plane") == 0)
+	{
+		if(argc - 2 != 3)
+		{
+			printf("Invalid number of arguments for plane: %d.\n", argc - 2);
+			exit(0);
+		}
+
+		float units = strtof(argv[2], NULL);
+		int divisions = strtol(argv[3], NULL, 10);
+
+		if(units < 0)
+		{
+			printf("Invalid argument for units: %f.\n", units);
+			exit(0);
+		}
+
+		if(divisions < 0)
+		{
+			printf("Invalid argument for divisions: %d.\n", divisions);
+			exit(0);
+		}
+
+		char* init_path = "generated/";
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[5]) + strlen(init_path)));
+		strcpy(path, init_path);
+		strncat(path, argv[5], strlen(argv[5]));
+
+		Plane p;
+
+		printf("Generating triangles...\n");
+
+		p.generateTriangles(units, divisions);
+
+		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
+
+		p.serialize(path);
+
+		printf("Triangles saved in \'%s\'.", path);
+
+		free(path);
+	}
+	else
+	{
+		printf("Invalid argument for shape: %s.", argv[1]);
+		exit(0);
+	}
 	
 	return 1;
 }

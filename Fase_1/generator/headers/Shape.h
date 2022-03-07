@@ -16,6 +16,8 @@ class Shape
         Shape(vector<Triangle> trianglesp);
         void addTriangle(Triangle toAdd);
         vector<Triangle> getTriangles();
+        void serialize(char* filename);
+        void deserialize(char* filename);
 };
 
 #endif // SHAPE_H

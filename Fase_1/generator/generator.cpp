@@ -145,9 +145,9 @@ int main(int argc, char **argv)
 		}
 
 		char* init_path = "generated/";
-		char* path = (char*) malloc(sizeof(char) * (strlen(argv[5]) + strlen(init_path)));
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[6]) + strlen(init_path)));
 		strcpy(path, init_path);
-		strncat(path, argv[5], strlen(argv[5]));
+		strncat(path, argv[6], strlen(argv[6]));
 
 		Cone c;
 

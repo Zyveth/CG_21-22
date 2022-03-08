@@ -297,11 +297,16 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// set the camera
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(camera.getFov(), 1.0, camera.getNear(), camera.getFar());
+
+    glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(camera.getXPos(), camera.getYPos(), camera.getZPos(), 
 		      camera.getXLookAt(), camera.getYLookAt(), camera.getZLookAt(),
 			  camera.getXUp(), camera.getYUp(), camera.getZUp());
-
+    
 	// put the geometric transformations here
 
 	// put drawing instructions here

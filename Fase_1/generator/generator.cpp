@@ -61,12 +61,11 @@ int main(int argc, char **argv)
 
 		s.serialize(path);
 
-		printf("Triangles saved in \'%s\'.", path);
+		printf("Triangles saved in \'%s\'.\n", path);
 
 		free(path);
 	}
-
-	if(strcmp(argv[1], "box") == 0)
+	else if(strcmp(argv[1], "box") == 0)
 	{
 		if(argc - 2 != 3)
 		{
@@ -104,12 +103,11 @@ int main(int argc, char **argv)
 
 		b.serialize(path);
 
-		printf("Triangles saved in \'%s\'.", path);
+		printf("Triangles saved in \'%s\'.\n", path);
 
 		free(path);
 	}
-
-	if(strcmp(argv[1], "cone") == 0)
+	else if(strcmp(argv[1], "cone") == 0)
 	{
 		if(argc - 2 != 5)
 		{
@@ -161,12 +159,11 @@ int main(int argc, char **argv)
 
 		c.serialize(path);
 
-		printf("Triangles saved in \'%s\'.", path);
+		printf("Triangles saved in \'%s\'.\n", path);
 
 		free(path);
 	}
-
-	if(strcmp(argv[1], "plane") == 0)
+	else if(strcmp(argv[1], "plane") == 0)
 	{
 		if(argc - 2 != 3)
 		{
@@ -190,9 +187,9 @@ int main(int argc, char **argv)
 		}
 
 		char* init_path = "generated/";
-		char* path = (char*) malloc(sizeof(char) * (strlen(argv[5]) + strlen(init_path)));
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[4]) + strlen(init_path)));
 		strcpy(path, init_path);
-		strncat(path, argv[5], strlen(argv[5]));
+		strncat(path, argv[4], strlen(argv[4]));
 
 		Plane p;
 
@@ -204,13 +201,13 @@ int main(int argc, char **argv)
 
 		p.serialize(path);
 
-		printf("Triangles saved in \'%s\'.", path);
+		printf("Triangles saved in \'%s\'.\n", path);
 
 		free(path);
 	}
 	else
 	{
-		printf("Invalid argument for shape: %s.", argv[1]);
+		printf("\n\nInvalid argument for shape: %s.", argv[1]);
 		exit(0);
 	}
 	

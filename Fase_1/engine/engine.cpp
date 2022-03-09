@@ -285,7 +285,7 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
 	// Set perspective
-	gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+	gluPerspective(camera.getFov() ,ratio, camera.getNear() , camera.getFar());
 
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
@@ -297,9 +297,6 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// set the camera
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(camera.getFov(), 1.0, camera.getNear(), camera.getFar());
 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

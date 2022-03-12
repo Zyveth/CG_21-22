@@ -6,7 +6,7 @@ void Box::generateTriangles(float uLength, int grid)
 
     float z_axis = uLength / 2;
     float x_axis = -(uLength / 2);
-    float y_axis = 0.0;
+    float y_axis = -(uLength / 2);
 
     // Drawing bottom and upper faces
 

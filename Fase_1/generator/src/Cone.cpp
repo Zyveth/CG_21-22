@@ -14,7 +14,7 @@ void Cone::generateTriangles(float radius, float height, int slices, int stacks)
 
     for(int i = 0; i < slices; i++)
     {
-        float beta = M_PI - ((M_PI / 2) - (alpha * (i + 1))) - (M_PI / 2);
+        float beta = alpha * (i + 1);
 
         Vertice first(sin(alpha * i) * radius, 0.0, cos(alpha * i) * radius);
         Vertice second(sin(beta) * radius, 0.0, cos(beta) * radius);

@@ -19,7 +19,7 @@ void Plane::generateTriangles(float uLength, int divisions)
 
             Triangle bottomHalf(curr, btmLeft, btmRight);
 
-            // Upper half trianglr
+            // Upper half triangle
             Vertice topRight(x_axis + (j * divisionLength), 0.0, z_axis - ((i + 1) * divisionLength));
 
             Triangle upperHalf(curr, btmRight, topRight);

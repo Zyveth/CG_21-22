@@ -108,7 +108,6 @@ void processKeys(unsigned char c, int xx, int yy) {
     */
 }
 
-
 void processSpecialKeys(int key, int xx, int yy) {
 
 // put code to process special keys in here

@@ -1,0 +1,123 @@
+<world> <!-- a world can have a camera, a set of lights, and a single group -->
+    <camera> 
+	    <position x="350" y="250" z="100" />
+	    <lookAt x="350" y="150" z="0" />
+	    <up x="0" y="1" z="0" /> <!-- optional, use these values as default-->
+        <projection fov="60" near="1" far="3000" /> <!-- optional, use these values as default-->
+    </camera>
+
+    <group> 
+        <transform> 
+		    <translate x="0" y="150" z="0" />
+        </transform>
+        <group> <!-- Sun -->
+            <transform>
+                <scale x="150" y="150" z="150" />
+            </transform>
+            <models> 
+                <model file="sphere.3d" /> 
+            </models>
+        </group>
+        <group> <!-- Mercury -->
+            <transform>
+                <translate x="205" y="0" z="0" />
+                <scale x="5" y="5" z="5"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Venus -->
+            <transform>
+                <translate x="272.5" y="0" z="0" />
+                <scale x="12.5" y="12.5" z="12.5"/>
+                <rotate angle="177.4" x="0" y="0" z="1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> 
+            <transform>
+                <translate x="350" y="0" z="0" />
+            </transform>
+            <group> <!-- Earth -->
+                <transform>
+                    <scale x="15" y="15" z="15"/>
+                    <rotate angle="23.4" x="0" y="0" z="1"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+            <group> <!-- Moon -->
+                <transform>
+                    <translate x="0" y="0" z="30"/>
+                    <scale x="4" y="4" z="4"/>
+                </transform>
+                <models>
+                    <model file="sphere.3d" />
+                </models>
+            </group>
+        </group>
+        <group> <!-- Mars -->
+            <transform>
+                <translate x="423" y="0" z="0" />
+                <scale x="8" y="8" z="8"/>
+                <rotate angle="25.2" x="0" y="0" z="1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Jupiter -->
+            <transform>
+                <translate x="641" y="0" z="0" />
+                <scale x="60" y="60" z="60"/>
+                <rotate angle="3.1" x="0" y="0" z="1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Saturn -->
+            <transform>
+                <translate x="852" y="0" z="0" />
+                <scale x="51" y="51" z="51"/>
+                <rotate angle="26.7" x="0" y="0" z="1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Uranus -->
+            <transform>
+                <translate x="1024.5" y="0" z="0" />
+                <scale x="21.5" y="21.5" z="21.5"/>
+                <rotate angle="97.8" x="0" y="0" z="1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Neptune -->
+            <transform>
+                <translate x="1156" y="0" z="0" />
+                <scale x="20" y="20" z="20"/>
+                <rotate angle="28.3" x="0" y="0" z="1"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+        <group> <!-- Pluto -->
+            <transform>
+                <translate x="1278" y="0" z="0" />
+                <scale x="2" y="2" z="2"/>
+            </transform>
+            <models>
+                <model file="sphere.3d" />
+            </models>
+        </group>
+    </group>
+</world>

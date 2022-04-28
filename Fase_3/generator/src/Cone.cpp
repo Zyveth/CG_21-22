@@ -3,7 +3,7 @@
 
 #include "../headers/Cone.h"
 
-void Cone::generateTriangles(float radius, float height, int slices, int stacks)
+void Cone::generateVertices(float radius, float height, int slices, int stacks)
 {
     Vertice center(0.0, 0.0, 0.0);
     Vertice tip(0.0, height, 0.0);
@@ -19,8 +19,6 @@ void Cone::generateTriangles(float radius, float height, int slices, int stacks)
         Vertice first(sin(alpha * i) * radius, 0.0, cos(alpha * i) * radius);
         Vertice second(sin(beta) * radius, 0.0, cos(beta) * radius);
 
-        Triangle t(center, second, first);
-
         for(int j = stacks - 1; j > 0; j--)
         {
             float lower_radius = radius * ((float) j / stacks);
@@ -32,25 +30,31 @@ void Cone::generateTriangles(float radius, float height, int slices, int stacks)
             Vertice top_left(sin(alpha * i) * lower_radius, z_axis * (stacks - j), cos(alpha * i) * lower_radius);
             Vertice top_right(sin(beta) * lower_radius, z_axis * (stacks - j), cos(beta) * lower_radius);
 
-            Triangle bottom_half(bottom_left, bottom_right, top_left);
-            Triangle upper_half(top_left, bottom_right, top_right);
+            this->addVertice(bottom_left);
+            this->addVertice(bottom_right);
+            this->addVertice(top_left);
 
-            this->addTriangle(bottom_half);
-            this->addTriangle(upper_half);
+            this->addVertice(top_left);
+            this->addVertice(bottom_right);
+            this->addVertice(top_right);
 
             if(j == 1)
             {
-                Triangle top(top_left, top_right, tip);
-                this->addTriangle(top);
+                this->addVertice(top_left);
+                this->addVertice(top_right);
+                this->addVertice(tip);
             }
         }
 
         if(stacks == 1)
         {
-            Triangle top(first, second, tip);
-            this->addTriangle(top);
+            this->addVertice(first);
+            this->addVertice(second);
+            this->addVertice(tip);
         }
 
-        this->addTriangle(t);
+        this->addVertice(center);
+        this->addVertice(second);
+        this->addVertice(first);
         }
 }

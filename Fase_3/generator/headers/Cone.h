@@ -8,9 +8,9 @@ class Cone : public Shape
     public:
         Cone() : Shape(){};
 
-        Cone(vector<Triangle> trianglesp) : Shape(trianglesp){};
+        Cone(vector<Vertice> verticesp) : Shape(verticesp){};
 
-        void generateTriangles(float radius, float height, int slices, int stacks);
+        void generateVertices(float radius, float height, int slices, int stacks);
 };
 
 #endif // CONE_H

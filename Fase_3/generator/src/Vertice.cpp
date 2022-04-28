@@ -30,17 +30,3 @@ float Vertice::getZ()
 {
     return z;
 }
-
-void Vertice::serialize(int fd)
-{
-    write(fd, &x, sizeof(float));
-    write(fd, &y, sizeof(float));
-    write(fd, &z, sizeof(float));
-}
-
-void Vertice::deserialize(int fd)
-{
-    read(fd, &x, sizeof(float));
-    read(fd, &y, sizeof(float));
-    read(fd, &z, sizeof(float));
-}

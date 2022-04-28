@@ -8,9 +8,9 @@ class Plane : public Shape
     public:
         Plane() : Shape(){};
 
-        Plane(vector<Triangle> trianglesp) : Shape(trianglesp){};
+        Plane(vector<Vertice> verticesp) : Shape(verticesp){};
 
-        void generateTriangles(float uLenght, int divisions);
+        void generateVertices(float uLenght, int divisions);
 };
 
 #endif // PLANE_H

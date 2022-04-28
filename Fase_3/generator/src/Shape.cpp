@@ -1,5 +1,4 @@
-#include <fcntl.h>
-#include <unistd.h>
+#include <fstream>
 
 #include "../headers/Shape.h"
 
@@ -8,69 +7,89 @@ Shape::Shape()
     
 }
 
-Shape::Shape(vector<Triangle> trianglesp)
+Shape::Shape(vector<Vertice> verticesp)
 {
-    triangles = trianglesp;
+    vertices = verticesp;
 }
 
-void Shape::addTriangle(Triangle toAdd)
+void Shape::addVertice(Vertice toAdd)
 {
-    triangles.push_back(toAdd);
+    vertices.push_back(toAdd);
 }
 
-vector<Triangle> Shape::getTriangles()
+vector<Vertice> Shape::getVertices()
 {
-    return triangles;
+    return vertices;
 }
 
 void Shape::serialize(char* filename)
 {
-    int fd;
+    char buff[1024];
+    Vertice v;
 
-    if((fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0740)) == -1)
+    ofstream file(filename, std::ofstream::out);
+
+    for(int i = 0; i < vertices.size(); i++)
     {
-        perror("Open:");
-        exit(1);
+        v = vertices.at(i);
+
+        sprintf(buff, "%f %f %f\n", v.getX(), v.getY(), v.getZ());
+        file << buff;
     }
 
-    int size = triangles.size();
-
-    write(fd, &size, sizeof(int));
-
-    for(vector<Triangle>::iterator it = triangles.begin(); it != triangles.end(); it++)
-    {
-        Triangle curr = *it;
-
-        curr.serialize(fd);
-    }
-
-    close(fd);
+    file.close();
 }
 
 void Shape::deserialize(char* filename)
 {
-    int fd, bytes_read;
+    ifstream file;
+    file.open(filename);
 
-    if((fd = open(filename, O_RDONLY)) == -1)
+    if(file.is_open(), ios::in)
     {
-        perror("Open:");
-        exit(1);
+        string line;
+        char* lineC;
+        string delimiter = " ";
+        float x, y, z;
+
+        while(getline(file, line))
+        {
+            size_t pos = 0;
+            string token;
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            x = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            y = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+            pos = line.find(delimiter);
+            token = line.substr(0, pos);
+            z = atof(token.c_str());
+            line.erase(0, pos + delimiter.length());
+            vertices.push_back(Vertice(x,y,z));
+        }
     }
+}
 
-    int size;
+Vertice Shape::getVertice(int indice)
+{
+    return vertices.at(indice);
+}
 
-    read(fd, &size, sizeof(int));
+vector<float> Shape::getVBO()
+{
+    Vertice v;
+    vector<float> res;
 
-    triangles.clear();
-
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < vertices.size(); i++)
     {
-        Triangle curr;
-
-        curr.deserialize(fd);
-
-        this->addTriangle(curr);
+        v = vertices.at(i);
+        res.push_back(v.getX());
+        res.push_back(v.getY());
+        res.push_back(v.getZ());
     }
-
-    close(fd);
+    
+    return res;
 }

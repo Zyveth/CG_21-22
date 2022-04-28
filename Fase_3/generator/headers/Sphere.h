@@ -7,9 +7,9 @@ class Sphere : public Shape
 {
     public:
         Sphere() : Shape(){};
-        Sphere(vector<Triangle> trianglesp) : Shape(trianglesp){};
+        Sphere(vector<Vertice> verticesp) : Shape(verticesp){};
 
-        void generateTriangles(float radius, int slices, int stacks);
+        void generatevertices(float radius, int slices, int stacks);
 };
 
 #endif // SPHERE_H

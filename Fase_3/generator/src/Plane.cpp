@@ -1,6 +1,6 @@
 #include "../headers/Plane.h"
 
-void Plane::generateTriangles(float uLength, int divisions)
+void Plane::generateVertices(float uLength, int divisions)
 {
     float divisionLength = uLength / (float) divisions;
 
@@ -17,15 +17,16 @@ void Plane::generateTriangles(float uLength, int divisions)
             Vertice btmLeft(x_axis + ((j + 1) * divisionLength), 0.0, z_axis - (i * divisionLength));
             Vertice btmRight(x_axis + ((j + 1) * divisionLength), 0.0, z_axis - ((i + 1) * divisionLength));
 
-            Triangle bottomHalf(curr, btmLeft, btmRight);
+            this->addVertice(curr);
+            this->addVertice(btmLeft);
+            this->addVertice(btmRight);
 
             // Upper half triangle
             Vertice topRight(x_axis + (j * divisionLength), 0.0, z_axis - ((i + 1) * divisionLength));
 
-            Triangle upperHalf(curr, btmRight, topRight);
-
-            this->addTriangle(bottomHalf);
-            this->addTriangle(upperHalf);
+            this->addVertice(curr);
+            this->addVertice(btmRight);
+            this->addVertice(topRight);
         }
     }
 }

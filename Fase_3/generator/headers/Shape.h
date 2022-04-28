@@ -2,22 +2,25 @@
 #define SHAPE_H
 
 #include <vector>
-#include "Triangle.h"
+
+#include "Vertice.h"
 
 using namespace std;
 
 class Shape
 {
     protected:
-        vector<Triangle> triangles;
+        vector<Vertice> vertices;
 
     public:
         Shape();
-        Shape(vector<Triangle> trianglesp);
-        void addTriangle(Triangle toAdd);
-        vector<Triangle> getTriangles();
+        Shape(vector<Vertice> verticesp);
+        void addVertice(Vertice toAdd);
+        vector<Vertice> getVertices();
+        vector<float> getVBO();
         void serialize(char* filename);
         void deserialize(char* filename);
+        Vertice getVertice(int indice);
 };
 
 #endif // SHAPE_H

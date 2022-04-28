@@ -5,6 +5,7 @@
 #include "headers/Box.h"
 #include "headers/Cone.h"
 #include "headers/Plane.h"
+#include "headers/Bezier.h"
 
 using namespace std;
 
@@ -53,15 +54,15 @@ int main(int argc, char **argv)
 
 		Sphere s;
 
-		printf("Generating triangles...\n");
+		printf("Generating vertices...\n");
 
-		s.generateTriangles(radius, slices, stacks);
+		s.generatevertices(radius, slices, stacks);
 
-		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
+		printf("Vertices generated.\n\nSaving vertices in \'%s\'...\n", path);
 
 		s.serialize(path);
 
-		printf("Triangles saved in \'%s\'.\n", path);
+		printf("Vertices saved in \'%s\'.\n", path);
 
 		free(path);
 	}
@@ -95,15 +96,15 @@ int main(int argc, char **argv)
 
 		Box b;
 
-		printf("Generating triangles...\n");
+		printf("Generating vertices...\n");
 
-		b.generateTriangles(units, divisions);
+		b.generateVertices(units, divisions);
 
-		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
+		printf("Vertices generated.\n\nSaving vertices in \'%s\'...\n", path);
 
 		b.serialize(path);
 
-		printf("Triangles saved in \'%s\'.\n", path);
+		printf("Vertices saved in \'%s\'.\n", path);
 
 		free(path);
 	}
@@ -151,15 +152,15 @@ int main(int argc, char **argv)
 
 		Cone c;
 
-		printf("Generating triangles...\n");
+		printf("Generating vertices...\n");
 
-		c.generateTriangles(radius, height, slices, stacks);
+		c.generateVertices(radius, height, slices, stacks);
 
-		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
+		printf("Vertices generated.\n\nSaving vertices in \'%s\'...\n", path);
 
 		c.serialize(path);
 
-		printf("Triangles saved in \'%s\'.\n", path);
+		printf("Vertices saved in \'%s\'.\n", path);
 
 		free(path);
 	}
@@ -193,15 +194,54 @@ int main(int argc, char **argv)
 
 		Plane p;
 
-		printf("Generating triangles...\n");
+		printf("Generating vertices...\n");
 
-		p.generateTriangles(units, divisions);
+		p.generateVertices(units, divisions);
 
-		printf("Triangles generated.\n\nSaving triangles in \'%s\'...\n", path);
+		printf("Vertices generated.\n\nSaving vertices in \'%s\'...\n", path);
 
 		p.serialize(path);
 
-		printf("Triangles saved in \'%s\'.\n", path);
+		printf("Vertices saved in \'%s\'.\n", path);
+
+		free(path);
+	}
+	else if(strcmp(argv[1], "bezier") == 0)
+	{
+		if(argc - 2 != 3)
+		{
+			printf("Invalid number of arguments for bezier: %d.\n", argc - 2);
+			exit(0);
+		}
+
+		char* input_file = (char*) malloc(sizeof(char) * (strlen(argv[2])));
+		strcpy(input_file, argv[2]);
+
+		int tessellation = strtol(argv[3], NULL, 10);
+
+		if(tessellation < 0)
+		{
+			printf("Invalid argument for tessellation: %d.\n", tessellation);
+			exit(0);
+		}
+
+		char* init_path = "generated/";
+		char* path = (char*) malloc(sizeof(char) * (strlen(argv[4]) + strlen(init_path)));
+		strcpy(path, init_path);
+		strncat(path, argv[4], strlen(argv[4]));
+
+		Bezier b;
+
+		printf("Generating vertices...\n");
+
+		b.parseBezier(input_file);
+		b.bezierPoints(tessellation);
+
+		printf("Vertices generated.\n\nSaving vertices in \'%s\'...\n", path);
+
+		b.serialize(path);
+
+		printf("Vertices saved in \'%s\'.\n", path);
 
 		free(path);
 	}

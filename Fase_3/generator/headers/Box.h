@@ -8,9 +8,9 @@ class Box : public Shape
     public:
         Box() : Shape(){};
 
-        Box(vector<Triangle> trianglesp) : Shape(trianglesp){};
+        Box(vector<Vertice> verticesp) : Shape(verticesp){};
 
-        void generateTriangles(float uLenght, int grid);
+        void generateVertices(float uLenght, int grid);
 };
 
 #endif // BOX_H

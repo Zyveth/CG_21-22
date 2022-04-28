@@ -68,7 +68,7 @@ void Bezier::parseBezier(const char* inputFile)
         for(int j = 0; j < 16; j++)
         {
             Vertice auxvertice = bezierPoints.at(patch_index[i][j]);
-            // Adicionar ponto        
+            s.addVertice(auxvertice);       
         }
 
         patches.push_back(s);
@@ -96,7 +96,13 @@ void Bezier::bezierPoints(int tessellation)
                 Vertice p3 = bezierPatch(u, v2, s);
                 Vertice p4 = bezierPatch(u2, v2, s);
 
-                // Adicionar pontos
+                this->addVertice(p2);
+                this->addVertice(p3);
+                this->addVertice(p4);
+
+                this->addVertice(p1);
+                this->addVertice(p3);
+                this->addVertice(p4);
             }
         }
     }
@@ -111,9 +117,9 @@ Vertice Bezier::bezierPatch(float u, float v, Shape patch)
 
     for(int i = 0; i < 16; i++)
     {
-        //Vertice aux = patch.get(i);
-        //pts_u[j] = aux;
-        //j++;
+        Vertice aux = patch.getVertice(i);
+        pts_u[j] = aux;
+        j++;
 
         if(j % 4 == 0)
         {

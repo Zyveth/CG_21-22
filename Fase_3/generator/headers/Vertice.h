@@ -14,8 +14,6 @@ class Vertice
         float getX();
         float getY();
         float getZ();
-        void serialize(int fd);
-        void deserialize(int fd);
 };
 
 #endif // VERTICE_H

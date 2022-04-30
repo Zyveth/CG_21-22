@@ -4,7 +4,6 @@
 #include <GL/glut.h>
 #endif
 
-#include "../headers/Shape.h"
 #include "../headers/Parser.h"
 #include "../tinyxml2/tinyxml2.h"
 
@@ -14,6 +13,15 @@ void Parser::setFilename(const char* filename)
 {
     this->filename = (char*) malloc(sizeof (char) * strlen(filename));
     strcpy(this->filename, filename);
+}
+
+void Parser::draw()
+{
+    for(int i = 0; i < models.size(); i++)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+        models.at(i).draw();
+    }
 }
 
 Camera Parser::parseCamera()
@@ -122,13 +130,27 @@ void Parser::parseGroups()
     XMLElement* group = world->FirstChildElement("group");
 
     this->parseSubGroups(group);
+
+    buffers = (GLuint*) malloc(sizeof(GLuint) * models.size());
+
+    glGenBuffers(models.size(), buffers);
+
+    Shape s;
+
+    for(int i = 0; i < models.size(); i++)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+        s = models.at(i);
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * s.getVBO().size(), s.getVBO().data(), GL_DYNAMIC_DRAW);
+    }
 }
 
 void Parser::parseSubGroups(XMLElement* group)
 {
     for(; group != NULL; group = group->NextSiblingElement("group"))
     {
-        glPushMatrix();
+        //glPushMatrix();
 
         XMLElement* transforms = group->FirstChildElement("transform");
 
@@ -138,52 +160,114 @@ void Parser::parseSubGroups(XMLElement* group)
 
             for(transform = transforms->FirstChildElement(); transform != NULL; transform = transform->NextSiblingElement())
             {
+                Transform t;
+
                 if(strcmp(transform->Name(), "translate") == 0)
                 {
-                    float x;
-                    transform->QueryFloatAttribute("x", &x);
+                    if(strcmp(transform->FirstAttribute()->Name(), "time") == 0)
+                    {
+                        t.setID(1);
 
-                    float y;
-                    transform->QueryFloatAttribute("y", &y);
+                        float time;
+                        transform->QueryFloatAttribute("time", &time);
+                        t.setTime(time);
 
-                    float z;
-                    transform->QueryFloatAttribute("z", &z);
+                        const char* aux_align;
+                        aux_align = transform->Attribute("align");
+                        char* align = (char*) malloc(sizeof (char) * strlen(aux_align));
 
-                    glTranslatef(x, y, z);
+                        if(strcmp(align, "True") == 0)
+                        {
+                            t.setAlign(true);
+                        }
+
+                        free(align);
+
+                        XMLElement* point;
+
+                        for(point = transform->FirstChildElement(); point != NULL; point = point->NextSiblingElement())
+                        {
+                            float x;
+                            transform->QueryFloatAttribute("x", &x);
+
+                            float y;
+                            transform->QueryFloatAttribute("y", &y);
+
+                            float z;
+                            transform->QueryFloatAttribute("z", &z);
+
+                            t.addPoint(Vertice(x, y, z));
+                        }
+                    } else
+                    {
+                        float x;
+                        transform->QueryFloatAttribute("x", &x);
+                        t.setX(x);
+
+                        float y;
+                        transform->QueryFloatAttribute("y", &y);
+                        t.setY(y);
+
+                        float z;
+                        transform->QueryFloatAttribute("z", &z);
+                        t.setZ(z);
+                    }
                 }
 
                 if(strcmp(transform->Name(), "rotate") == 0)
                 {
-                    float angle;
-                    transform->QueryFloatAttribute("angle", &angle);
+                    t.setType(1);
+
+                    if(strcmp(transform->FirstAttribute()->Name(), "time") == 0)
+                    {
+                        t.setID(1);
+
+                        float time;
+                        transform->QueryFloatAttribute("time", &time);
+                        t.setTime(time);
+
+                    } else
+                    {
+                        float angle;
+                        transform->QueryFloatAttribute("angle", &angle);
+                        t.setAngle(angle);
+                    }
 
                     float x;
                     transform->QueryFloatAttribute("x", &x);
+                    t.setX(x);
 
                     float y;
                     transform->QueryFloatAttribute("y", &y);
+                    t.setY(y);
 
                     float z;
                     transform->QueryFloatAttribute("z", &z);
-
-                    glRotatef(angle, x, y, z);
+                    t.setZ(z);
                 }
 
                 if(strcmp(transform->Name(), "scale") == 0)
                 {
+                    t.setType(2);
+
                     float x;
                     transform->QueryFloatAttribute("x", &x);
+                    t.setX(x);
 
                     float y;
                     transform->QueryFloatAttribute("y", &y);
+                    t.setY(y);
 
                     float z;
                     transform->QueryFloatAttribute("z", &z);
-
-                    glScalef(x, y, z);
+                    t.setZ(z);
                 }
+
+                this->transforms.push_back(t);
             }
         }
+
+        indices.push_back(this->transforms.size() - 1);
 
         XMLElement* models = group->FirstChildElement("models");
 
@@ -200,7 +284,11 @@ void Parser::parseSubGroups(XMLElement* group)
 
                 Shape s;
                 s.deserialize(file);
-                s.draw();
+                s.setTransforms(this->transforms);
+
+                this->models.push_back(s);
+
+                free(file);
             }
         }
 
@@ -208,6 +296,11 @@ void Parser::parseSubGroups(XMLElement* group)
 
         this->parseSubGroups(sub_group);
 
-        glPopMatrix();
+        for(int i = this->transforms.size() - 1; i >= indices[indices.size() - 1]; i--)
+        {
+            this->transforms.pop_back();
+        }
+
+        indices.pop_back();
     }
 }

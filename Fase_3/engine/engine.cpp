@@ -110,9 +110,8 @@ void renderScene(void) {
 
 	// put drawing instructions here
 
-	// Triangles
-
-	parser.parseGroups();
+	glColor3f(1.0f, 1.0f, 1.0f);
+	parser.draw();
 
 	// End of frame
 	glutSwapBuffers();
@@ -237,13 +236,16 @@ void init()
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnableClientState(GL_VERTEX_ARRAY);
     glPolygonMode(GL_FRONT, GL_LINE);
+
+	parser.parseGroups();
 
 	glutWarpPointer(width / 2, height / 2);
 }
 
 int main(int argc, char** argv)
-{ 
+{
     parser.setFilename(argv[1]);
     camera = parser.parseCamera();
     
@@ -257,6 +259,7 @@ int main(int argc, char** argv)
 // Required callback registry
 	init();
 	glutDisplayFunc(renderScene);
+	glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	glutPassiveMotionFunc(passive_motion);
     glutTimerFunc(0, timer, 0);	

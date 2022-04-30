@@ -1,9 +1,3 @@
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
 #include <unistd.h>
 
 #include "../headers/Vertice.h"
@@ -35,23 +29,4 @@ float Vertice::getY()
 float Vertice::getZ()
 {
     return z;
-}
-
-void Vertice::serialize(int fd)
-{
-    write(fd, &x, sizeof(float));
-    write(fd, &y, sizeof(float));
-    write(fd, &z, sizeof(float));
-}
-
-void Vertice::deserialize(int fd)
-{
-    read(fd, &x, sizeof(float));
-    read(fd, &y, sizeof(float));
-    read(fd, &z, sizeof(float));
-}
-
-void Vertice::draw()
-{
-    glVertex3f(x, y, z);
 }

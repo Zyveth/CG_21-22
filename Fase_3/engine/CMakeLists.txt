@@ -46,8 +46,8 @@ else (WIN32) #Linux and Mac
 	add_definitions(${GLUT_DEFINITIONS})
 	
 	target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${PROJECT_SOURCE_DIR}/src/Vertice.cpp
-	${PROJECT_SOURCE_DIR}/src/Triangle.cpp ${PROJECT_SOURCE_DIR}/src/Shape.cpp ${PROJECT_SOURCE_DIR}/src/Camera.cpp
-	${PROJECT_SOURCE_DIR}/src/Parser.cpp ${PROJECT_SOURCE_DIR}/tinyxml2/tinyxml2.cpp)
+	${PROJECT_SOURCE_DIR}/src/Shape.cpp ${PROJECT_SOURCE_DIR}/src/Camera.cpp ${PROJECT_SOURCE_DIR}/src/Parser.cpp 
+	${PROJECT_SOURCE_DIR}/src/Transform.cpp ${PROJECT_SOURCE_DIR}/tinyxml2/tinyxml2.cpp)
 	if(NOT GLUT_FOUND)
 	   message(ERROR ": GLUT not found!")
 	endif(NOT GLUT_FOUND)

@@ -22,6 +22,8 @@ class Parser
 
         GLuint* buffers;
 
+        float fps = 60.0;
+
         void parseSubGroups(tinyxml2::XMLElement*);
 
     public:
@@ -32,6 +34,8 @@ class Parser
         void setFilename(const char* filename);
 
         void draw();
+
+        void setFPS(float newFPS);
 };
 
 #endif // PARSER_H

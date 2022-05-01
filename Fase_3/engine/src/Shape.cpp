@@ -105,13 +105,13 @@ void Shape::setTransforms(vector<Transform> newTransforms)
     transform = newTransforms;
 }
 
-void Shape::draw()
+void Shape::draw(float fps)
 {
     glPushMatrix();
 
     for(int i = 0; i < transform.size(); i++)
     {
-        transform.at(i).apply();
+        transform.at(i).apply(fps);
     }
 
     glVertexPointer(3, GL_FLOAT, 0, 0);

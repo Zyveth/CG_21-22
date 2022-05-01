@@ -3,7 +3,7 @@
 
 #include "../headers/Sphere.h"
 
-void Sphere::generatevertices(float radius, int slices, int stacks)
+void Sphere::generateVertices(float radius, int slices, int stacks)
 {
     float angleStacks = M_PI / stacks;
     float angleSlices = (2 * M_PI) / slices;

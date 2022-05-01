@@ -20,7 +20,7 @@ void Parser::draw()
     for(int i = 0; i < models.size(); i++)
     {
         glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-        models.at(i).draw();
+        models.at(i).draw(fps);
     }
 }
 
@@ -175,6 +175,7 @@ void Parser::parseSubGroups(XMLElement* group)
                         const char* aux_align;
                         aux_align = transform->Attribute("align");
                         char* align = (char*) malloc(sizeof (char) * strlen(aux_align));
+                        strcpy(align, aux_align);
 
                         if(strcmp(align, "True") == 0)
                         {
@@ -186,15 +187,15 @@ void Parser::parseSubGroups(XMLElement* group)
                         XMLElement* point;
 
                         for(point = transform->FirstChildElement(); point != NULL; point = point->NextSiblingElement())
-                        {
+                        {                            
                             float x;
-                            transform->QueryFloatAttribute("x", &x);
+                            point->QueryFloatAttribute("x", &x);
 
                             float y;
-                            transform->QueryFloatAttribute("y", &y);
+                            point->QueryFloatAttribute("y", &y);
 
                             float z;
-                            transform->QueryFloatAttribute("z", &z);
+                            point->QueryFloatAttribute("z", &z);
 
                             t.addPoint(Vertice(x, y, z));
                         }
@@ -303,4 +304,9 @@ void Parser::parseSubGroups(XMLElement* group)
 
         indices.pop_back();
     }
+}
+
+void Parser::setFPS(float newFPS)
+{
+    fps = newFPS;
 }

@@ -9,7 +9,7 @@ class Sphere : public Shape
         Sphere() : Shape(){};
         Sphere(vector<Vertice> verticesp) : Shape(verticesp){};
 
-        void generatevertices(float radius, int slices, int stacks);
+        void generateVertices(float radius, int slices, int stacks);
 };
 
 #endif // SPHERE_H

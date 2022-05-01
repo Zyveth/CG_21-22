@@ -97,7 +97,7 @@ void Bezier::bezierPoints(int tessellation)
                 Vertice p4 = bezierPatch(u2, v2, s);
 
                 this->addVertice(p2);
-                this->addVertice(p3);
+                this->addVertice(p1);
                 this->addVertice(p4);
 
                 this->addVertice(p1);

@@ -26,6 +26,9 @@ float yaw = 0.0, pitch = 0.0;
 
 float camX = 0.0, camY = 1.0, camZ = 0.0;
 
+// Frame and time
+int timebase = 0, frame = 0;
+
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -71,7 +74,9 @@ void updateCamera()
 	glTranslatef(-camX, -camY, -camZ);
 }
 
-void renderScene(void) {
+void renderScene(void) 
+{
+	int time;
 
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -112,6 +117,15 @@ void renderScene(void) {
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 	parser.draw();
+
+	frame++;
+	time = glutGet(GLUT_ELAPSED_TIME);
+	if(time - timebase > 1000)
+	{
+		parser.setFPS(frame * 1000.0 / (time-timebase)); 
+		timebase = time; 
+		frame = 0;
+	}
 
 	// End of frame
 	glutSwapBuffers();
@@ -259,7 +273,7 @@ int main(int argc, char** argv)
 // Required callback registry
 	init();
 	glutDisplayFunc(renderScene);
-	glutIdleFunc(renderScene);
+	//glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	glutPassiveMotionFunc(passive_motion);
     glutTimerFunc(0, timer, 0);	

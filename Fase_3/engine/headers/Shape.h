@@ -24,7 +24,7 @@ class Shape
         void deserialize(char* filename);
         Vertice getVertice(int indice);
         void setTransforms(vector<Transform> newTransforms);
-        void draw();
+        void draw(float fps);
 };
 
 #endif // SHAPE_H

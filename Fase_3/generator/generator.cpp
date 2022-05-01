@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
 		printf("Generating vertices...\n");
 
-		s.generatevertices(radius, slices, stacks);
+		s.generateVertices(radius, slices, stacks);
 
 		printf("Vertices generated.\n\nSaving vertices in \'%s\'...\n", path);
 

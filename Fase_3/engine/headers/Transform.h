@@ -20,6 +20,9 @@ class Transform
         // Translate
         // Dynamic
         bool align = false;
+        float tg = 0;
+        int frame = 0;
+        float yt[3] = {0, 1, 0};
         vector<Vertice> points;
 
         // Rotate
@@ -31,13 +34,21 @@ class Transform
         float x = 0.0;
         float y = 0.0;
         float z = 0.0;
+
+        void getGlobalCatmullRomPoint(float gt, float* pos, float* deriv);
+        void getCatmullRomPoint(float t, Vertice p0, Vertice p1, Vertice p2, Vertice p3, float* pos, float* deriv);
+        void multMatrixVector(float* m, float* v, float* res);
+
+        void cross(float* a, float* b, float* res);
+        void normalize(float* a);
+        void buildRotMatrix(float* x, float* y, float* z, float* m);
     
     public:
         void setType(int newType);
 
         void setID(int newID);
-
         void setTime(float newTime);
+
         void setAlign(bool newAlign);
         void addPoint(Vertice toAdd);
 
@@ -47,7 +58,7 @@ class Transform
         void setY(float newY);
         void setZ(float newZ);
 
-        void apply();
+        void apply(float fps);
 };
 
 #endif // TRANSFORM_H

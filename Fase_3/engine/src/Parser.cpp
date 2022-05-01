@@ -129,6 +129,8 @@ void Parser::parseGroups()
 
     XMLElement* group = world->FirstChildElement("group");
 
+    indices.push_back(0);
+
     this->parseSubGroups(group);
 
     buffers = (GLuint*) malloc(sizeof(GLuint) * models.size());
@@ -150,8 +152,6 @@ void Parser::parseSubGroups(XMLElement* group)
 {
     for(; group != NULL; group = group->NextSiblingElement("group"))
     {
-        //glPushMatrix();
-
         XMLElement* transforms = group->FirstChildElement("transform");
 
         if(transforms != NULL)
@@ -297,7 +297,7 @@ void Parser::parseSubGroups(XMLElement* group)
 
         this->parseSubGroups(sub_group);
 
-        for(int i = this->transforms.size() - 1; i >= indices[indices.size() - 1]; i--)
+        for(int i = this->transforms.size() - 1; i >= indices[indices.size() - 2]; i--)
         {
             this->transforms.pop_back();
         }

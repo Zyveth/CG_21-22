@@ -121,7 +121,7 @@ Vertice Bezier::bezierPatch(float u, float v, Shape patch)
         pts_u[j] = aux;
         j++;
 
-        if(j % 4 == 0)
+        if(j == 4)
         {
             pts_v[k++] = bValue(u, pts_u[0], pts_u[1], pts_u[2], pts_u[3]);
 
